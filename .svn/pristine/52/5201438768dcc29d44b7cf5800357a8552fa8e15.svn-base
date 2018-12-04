@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "C:\\Android\\naver\\NWebtoon_Android\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi-v4\\ic_launcher.png",
+        "source": "C:\\Android\\naver\\NWebtoon_Android\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\Android\\NWebtoon_Android\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi-v4\\ic_launcher.png",
+        "source": "D:\\Android\\NWebtoon_Android\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
+    }
+]

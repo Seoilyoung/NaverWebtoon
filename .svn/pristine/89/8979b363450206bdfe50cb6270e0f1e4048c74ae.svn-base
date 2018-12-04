@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "C:\\Android\\naver\\NWebtoon_Android\\app\\build\\intermediates\\res\\merged\\debug\\menu\\menu_main.xml",
+        "source": "C:\\Android\\naver\\NWebtoon_Android\\app\\src\\main\\res\\menu\\menu_main.xml"
+    },
+    {
+        "merged": "D:\\Android\\NWebtoon_Android\\app\\build\\intermediates\\res\\merged\\debug\\menu\\menu_main.xml",
+        "source": "D:\\Android\\NWebtoon_Android\\app\\src\\main\\res\\menu\\menu_main.xml"
+    }
+]

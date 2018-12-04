@@ -1,0 +1,77 @@
+package gabriel.com.nwebtoon_android.network;
+
+import android.app.Application;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.util.Log;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.nhn.android.naverlogin.OAuthLogin;
+
+import gabriel.com.nwebtoon_android.Activity.MainActivity;
+import gabriel.com.nwebtoon_android.model.NaverUserData;
+import retrofit.RestAdapter;
+import retrofit.converter.GsonConverter;
+
+public class Controller extends com.orm.SugarApp {
+
+    private static Controller instance;
+    ConnectivityManager connectivityManager;
+    NetworkInfo mobile, wifi;
+    public static Controller getInstance() { return instance; }
+    public static NaverUserData naverUserData = null;
+
+    @Override
+    public void onCreate() {
+
+        super.onCreate();
+        Controller.instance = this;
+        connectivityManager = (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        mobile = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        wifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        if(mobile.isConnected()){
+            Log.e("Network_Inspection","mobile is connected");
+        }
+        if(wifi.isConnected()){
+            Log.e("Network_Inspection","Wi-Fi is connected");
+        }
+        if(naverApi == null){
+            naverApi = OAuthLogin.getInstance();
+        }
+        if(naverUserData == null)
+        {
+            naverUserData = new NaverUserData();
+        }
+    }
+    private OAuthLogin naverApi;
+    public OAuthLogin getNaverApi() { return naverApi; }
+    private ServerInterface api;
+    public ServerInterface getServerInterface() { return api; }
+    public NetworkInfo getMobileInfo() { return mobile; }
+    public NetworkInfo getWifiInfo() { return wifi; }
+
+    private String endpoint;
+
+    public void buildServerInterface() {
+
+        synchronized (Controller.class) {
+
+            if (api == null) {
+
+                endpoint = String.format("http://192.168.0.6:8080/nwebtoon");
+
+                Gson gson = new GsonBuilder().create();
+
+                RestAdapter.Builder builder = new RestAdapter.Builder();
+                builder.setConverter(new GsonConverter(gson));
+                builder.setEndpoint(endpoint);
+
+                RestAdapter adapter = builder.build();
+                api = adapter.create(ServerInterface.class);
+            }
+
+        }
+    }
+}

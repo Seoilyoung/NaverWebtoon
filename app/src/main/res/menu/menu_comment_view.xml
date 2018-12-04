@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="gabriel.com.nwebtoon_android.Activity.CommentViewActivity">
+    <item
+        android:id="@+id/new_comment"
+        android:orderInCategory="100"
+        android:title="새 댓글"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_new_comment"/>
+</menu>

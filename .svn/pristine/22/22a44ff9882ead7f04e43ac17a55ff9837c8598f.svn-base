@@ -1,0 +1,75 @@
+package gabriel.com.nwebtoon_android.Activity;
+
+import android.app.Activity;
+import android.content.pm.ActivityInfo;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
+
+import gabriel.com.nwebtoon_android.R;
+import gabriel.com.nwebtoon_android.model.LocalData;
+
+/**
+ * Created by seoil on 2016-02-16.
+ */
+public class SettingActivity extends Activity {
+
+    RelativeLayout layout_setting_login ;
+    LinearLayout layout_setting_back ;
+    CheckBox chk_rotation, chk_scroll, chk_network ;
+    LocalData localdata ;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        setContentView(R.layout.activity_setting);
+        localdata = LocalData.findById(LocalData.class,1);
+
+        layout_setting_back = (LinearLayout)findViewById(R.id.layout_setting_back);
+        layout_setting_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        layout_setting_login = (RelativeLayout)findViewById(R.id.layout_setting_login);
+        layout_setting_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "login", Toast.LENGTH_SHORT).show();
+            }
+        });
+        chk_rotation = (CheckBox)findViewById(R.id.chk_rotation);
+        chk_rotation.setChecked(localdata.getRotation());
+        chk_rotation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                localdata.setRotation(isChecked);
+                localdata.save();
+            }
+        });
+        chk_scroll = (CheckBox)findViewById(R.id.chk_scroll);
+        chk_scroll.setChecked(localdata.getScroll());
+        chk_scroll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                localdata.setScroll(isChecked);
+                localdata.save();
+            }
+        });
+        chk_network = (CheckBox)findViewById(R.id.chk_network);
+        chk_network.setChecked(localdata.getNetwork());
+        chk_network.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                localdata.setNetwork(isChecked);
+                localdata.save();
+            }
+        });
+    }
+}

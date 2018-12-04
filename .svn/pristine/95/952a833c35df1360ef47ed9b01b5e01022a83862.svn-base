@@ -1,0 +1,26 @@
+package gabriel.com.nwebtoon_android.Activity;
+
+import android.content.pm.ActivityInfo;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+
+import gabriel.com.nwebtoon_android.R;
+
+/**
+ * Created by seoil on 2016-02-28.
+ */
+public class SearchActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        setContentView(R.layout.activity_search);
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_search, menu);
+        return true;
+    }
+}

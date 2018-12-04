@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="65dp">
+    <ImageView
+        android:id="@+id/img_thumbnail"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_width="90dp"
+        android:layout_height="65dp"
+        android:scaleType="fitXY"/>
+    <TextView
+        android:id="@+id/txt_list_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginBottom="5dp"
+        android:layout_toRightOf="@+id/img_thumbnail"
+        android:text="웹툰 제목"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="#000000"/>
+
+    <ImageView
+        android:id="@+id/img_stat"
+        android:layout_width="wrap_content"
+        android:layout_height="15dp"
+        android:layout_marginTop="17dp"
+        android:layout_toRightOf="@+id/txt_list_name"/>
+    <ImageView
+        android:id="@+id/img_type"
+        android:layout_width="wrap_content"
+        android:layout_height="15dp"
+        android:layout_marginTop="17dp"
+        android:layout_toRightOf="@+id/img_stat"/>
+
+    <TextView
+        android:id="@+id/txt_list_wtr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="10dp"
+        android:layout_toRightOf="@+id/img_thumbnail"
+        android:layout_below="@+id/txt_list_name"
+        android:text="웹툰 작가명"
+        android:textSize="12sp"
+        android:textColor="#000000"/>
+
+    <TextView
+        android:id="@+id/txt_list_update_dt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/txt_list_wtr"
+        android:layout_below="@+id/txt_list_name"
+        android:text="업데이트 시간"
+        android:textSize="12sp"
+        android:textColor="#A0A0A0"/>
+
+    <RelativeLayout
+        android:id="@+id/layout_current"
+        android:layout_width="70dp"
+        android:layout_height="65dp"
+        android:background="#ECECEC"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:gravity="center_vertical">
+        <TextView
+            android:id="@+id/txt_detailid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="0회"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="#000000" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/txt_detailid"
+            android:text="이어보기"
+            android:textSize="11sp"
+            android:gravity="center"
+            android:textColor="#000000" />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E2E2E2"
+        android:layout_toRightOf="@+id/img_thumbnail"
+        android:layout_alignParentBottom="true"></View>
+</RelativeLayout>

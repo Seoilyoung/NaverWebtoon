@@ -1,0 +1,201 @@
+package gabriel.com.nwebtoon_android.Activity;
+
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+
+import java.util.List;
+
+import gabriel.com.nwebtoon_android.R;
+import gabriel.com.nwebtoon_android.adapter.webtoonDetailAdapter;
+import gabriel.com.nwebtoon_android.model.webtoonInfoDetail;
+import gabriel.com.nwebtoon_android.model.webtoonListDetail;
+import gabriel.com.nwebtoon_android.network.Controller;
+import gabriel.com.nwebtoon_android.network.ServerInterface;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
+/**
+ * Created by seoil on 2016-02-19.
+ */
+public class DetailActivity extends AppCompatActivity {
+
+    private TextView txt_list_name;
+    private LinearLayout layout_detail_back, layout_detail_like, layout_detail_favorite, layout_detail_first;
+    private ServerInterface api;
+    RecyclerView recyclerView;
+    TextView txt_detail_like ;
+    ImageView img_detail_like, img_detail_favorite;
+    boolean bool_favorite = false, bool_like = false;
+    String id,name ;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        setContentView(R.layout.activity_detail);
+        api = Controller.getInstance().getServerInterface();
+
+        Detailinit();
+        Detailset() ;
+    }
+
+
+
+    private void Detailinit() {
+        Intent intent_date = getIntent();
+        id = intent_date.getStringExtra("id");
+        name = intent_date.getStringExtra("name");
+        txt_detail_like = (TextView) findViewById(R.id.txt_detail_like);
+        img_detail_like = (ImageView) findViewById(R.id.img_detail_like);
+        img_detail_favorite = (ImageView) findViewById(R.id.img_detail_favorite);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerview_detail);
+        txt_list_name = (TextView) findViewById(R.id.txt_list_name);
+        layout_detail_back = (LinearLayout) findViewById(R.id.layout_detail_back);
+        layout_detail_like = (LinearLayout) findViewById(R.id.layout_detail_like);
+        layout_detail_favorite = (LinearLayout) findViewById(R.id.layout_detail_favorite);
+        layout_detail_first = (LinearLayout) findViewById(R.id.layout_detail_first);
+    }
+    private  void Detailset() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        txt_list_name.setText(name);
+        layout_detail_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        layout_detail_like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(bool_like){
+                    img_detail_like.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                    bool_like = false;
+                    api.subHeaderLike("testuser", id, new Callback<List<webtoonInfoDetail>>() {
+                        @Override
+                        public void success(List<webtoonInfoDetail> webtoonInfoDetails, Response response) {
+                            txt_detail_like.setText(String.valueOf(webtoonInfoDetails.size()));
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                        }
+                    });
+
+                }
+                else{
+                    img_detail_like.setImageResource(R.drawable.ic_favorite_border_red_24dp);
+                    bool_like = true;
+                    api.addHeaderLike("testuser", id, new Callback<List<webtoonInfoDetail>>() {
+                        @Override
+                        public void success(List<webtoonInfoDetail> webtoonInfoDetails, Response response) {
+                            txt_detail_like.setText(String.valueOf(webtoonInfoDetails.size()));
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                        }
+                    });
+                }
+            }
+        });
+        layout_detail_favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(bool_favorite){
+                    img_detail_favorite.setImageResource(R.drawable.ic_star_border_black_24dp);
+                    bool_favorite = false;
+                    api.deleteHeaderFavirite(id, "testuser", new Callback<List<webtoonListDetail>>() {
+                        @Override
+                        public void success(List<webtoonListDetail> webtoonListDetails, Response response) {
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                        }
+                    });
+                }
+                else{
+                    img_detail_favorite.setImageResource(R.drawable.ic_star_border_red_24dp);
+                    bool_favorite = true;
+                    api.insertHeaderFavirite(id, "testuser", new Callback<List<webtoonListDetail>>() {
+                        @Override
+                        public void success(List<webtoonListDetail> webtoonListDetails, Response response) {
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                        }
+                    });
+                }
+            }
+        });
+        layout_detail_first.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent_first = new Intent(getApplicationContext(), ShowActivity.class);
+                intent_first.putExtra("TOON_ID", id);
+                intent_first.putExtra("DT_ID", "0001");
+                startActivity(intent_first);
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
+
+        api.getHeaderLIke(id, new Callback<List<webtoonInfoDetail>>() {
+            @Override
+            public void success(List<webtoonInfoDetail> webtoonInfoDetails, Response response) {
+                int num_like = webtoonInfoDetails.size();
+                txt_detail_like.setText(String.valueOf(num_like));
+                for(int i=0 ; i<num_like;i++){
+                    if(webtoonInfoDetails.get(i).USER_ID.equals("testuser")){
+                        bool_like = true;
+                        img_detail_like.setImageResource(R.drawable.ic_favorite_border_red_24dp);
+                        break;
+                    }
+                }
+            }
+            @Override
+            public void failure(RetrofitError error) {
+            }
+        });
+        api.getHeaderFavirite("testuser", id, new Callback<List<webtoonInfoDetail>>() {
+            @Override
+            public void success(List<webtoonInfoDetail> webtoonInfoDetails, Response response) {
+                if (webtoonInfoDetails.get(0).FAVORITE_HD != 0) {
+                    bool_favorite = true;
+                    img_detail_favorite.setImageResource(R.drawable.ic_star_border_red_24dp);
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+            }
+        });
+        api.getdetailWebtoonList(id, new Callback<List<webtoonListDetail>>() {
+            @Override
+            public void success(List<webtoonListDetail> webtoonListDetails, Response response) {
+                recyclerView.setAdapter(new webtoonDetailAdapter(getApplicationContext(), webtoonListDetails));
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Toast.makeText(getApplicationContext(), "네트워크 연결 실패", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+}

@@ -1,0 +1,65 @@
+package gabriel.com.nwebtoon_android.Activity;
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.TextWatcher;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
+import gabriel.com.nwebtoon_android.R;
+
+public class InsertCommActivity extends AppCompatActivity {
+
+    LinearLayout layout_insert_comm_back;
+    EditText txt_insert_comm_contents;
+    TextView txt_insert_comm_counter,txt_insert_comm_id;
+    Button btn_insert_comm_submit;
+    int maxCmtLen;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_insert_comm);
+        layout_insert_comm_back = (LinearLayout) findViewById(R.id.layout_insert_comm_back);
+        txt_insert_comm_contents = (EditText) findViewById(R.id.txt_insert_comm_contents);
+        txt_insert_comm_counter = (TextView) findViewById(R.id.txt_insert_comm_counter);
+        txt_insert_comm_id = (TextView) findViewById(R.id.txt_insert_comm_id);
+        btn_insert_comm_submit = (Button) findViewById(R.id.btn_insert_comm_submit);
+        maxCmtLen = getApplicationContext().getResources().getInteger(R.integer.max_comment_length);
+
+        InputFilter[] filter = new InputFilter[1];
+        filter[0] = new InputFilter.LengthFilter(maxCmtLen);
+        txt_insert_comm_contents.setFilters(filter);
+
+        txt_insert_comm_contents.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                txt_insert_comm_counter.setText(s.length()+"/"+maxCmtLen);
+            }
+        });
+
+        layout_insert_comm_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+}

@@ -1,0 +1,64 @@
+package gabriel.com.nwebtoon_android.network;
+
+
+import java.util.List;
+
+import gabriel.com.nwebtoon_android.model.adList;
+import gabriel.com.nwebtoon_android.model.commentList;
+import gabriel.com.nwebtoon_android.model.webtoonInfoDetail;
+import gabriel.com.nwebtoon_android.model.webtoonListDetail;
+import gabriel.com.nwebtoon_android.model.webtoonListMyFavorite;
+import gabriel.com.nwebtoon_android.model.webtoonShow;
+import retrofit.Callback;
+import gabriel.com.nwebtoon_android.model.webtoonListDay;
+import retrofit.http.GET;
+import retrofit.http.POST;
+import retrofit.http.Query;
+
+/**
+ * Created by PC on 2016-02-13.
+ */
+public interface ServerInterface {
+
+   @GET("/webtoonListDay")
+   public void getwebtoonLIstDays(@Query("day") int day, Callback<List<webtoonListDay>> callback) ;
+
+   @GET("/detailWebtoonList")
+   public void getdetailWebtoonList(@Query("toonId") String toonId, Callback<List<webtoonListDetail>> callback) ;
+
+   @GET("/favoriteWebtoonList")
+   public void getfavoriteWebtoonList(@Query("userId") String userId, Callback<List<webtoonListMyFavorite>> callback) ;
+
+   @GET("/cutImageList")
+   public void getcutImageList(@Query("toonId") String toonId, @Query("dtId") String dtId, Callback<List<webtoonShow>> callback) ;
+
+   @GET("/commentList")
+   public void getCommentList(@Query("commentType") int commentType, @Query("dtId") String dtId, @Query("ctId") String ctId, @Query("toonId") String toonId, @Query("pageNum") String pageNum, Callback<List<commentList>> callback);
+
+   @GET("/advertisementList")
+   public void getAdvertisementList(Callback<List<adList>> callback);
+
+  // @GET("/HeaderWebtoonFavorite")
+  // public void getHDFavorite(@Query("userId") String userId, @Query("toonId") String toonId, Callback<>);
+
+   @GET("/HeaderWebtoonLikeNum")
+   public void getHeaderLIke(@Query("toonId") String toonId, Callback<List<webtoonInfoDetail>> callback);
+   @GET("/addHeaderToonLike")
+   public void addHeaderLike(@Query("userId") String userId, @Query("toonId") String toonId, Callback<List<webtoonInfoDetail>> callback);
+   @GET("/subHeaderToonLike")
+   public void subHeaderLike(@Query("userId") String userId, @Query("toonId") String toonId, Callback<List<webtoonInfoDetail>> callback);
+
+   @GET("/HeaderWebtoonFavorite")
+   public void getHeaderFavirite(@Query("userId") String userId, @Query("toonId") String toonId, Callback<List<webtoonInfoDetail>> callback);
+   @GET("/insertFavoriteWebtoon")
+   public void insertHeaderFavirite(@Query("toonId") String toonId, @Query("userId") String userId, Callback<List<webtoonListDetail>> callback);
+   @GET("/deleteFavoriteWebtoon")
+   public void deleteHeaderFavirite(@Query("toonId") String toonId, @Query("userId") String userId, Callback<List<webtoonListDetail>> callback);
+
+   @GET("/bestCommentList")
+   public void getBestCommentList(@Query("pageNum") int pageNum, @Query("toonId") String toonId, @Query("dtId") String dtId, Callback<List<commentList>> callback);
+
+   @POST("/insertComment")
+   public void postInsertComment(@Query("cmtId") String cmtId, @Query("content") String content, @Query("dtId") String dtId, @Query("ctId") String ctId, @Query("cmtTp") String cmtTp, @Query("userId") String userId, @Query("toonId") String toonId, @Query("pageNum") String pageNum, Callback<List<commentList>> callback);
+
+}

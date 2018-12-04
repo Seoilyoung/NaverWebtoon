@@ -1,0 +1,9 @@
+package gabriel.com.nwebtoon_android.model;
+
+/**
+ * Created by seoil on 2016-02-26.
+ */
+public class webtoonInfoDetail {
+    public int FAVORITE_HD;
+    public String USER_ID;
+}

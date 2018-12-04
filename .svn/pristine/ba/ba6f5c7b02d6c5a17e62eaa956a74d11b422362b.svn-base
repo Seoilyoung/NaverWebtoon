@@ -1,0 +1,40 @@
+package gabriel.com.nwebtoon_android.model;
+
+import com.orm.SugarRecord;
+
+/**
+ * Created by seoil on 2016-02-25.
+ */
+public class LocalData extends SugarRecord{
+    boolean Rotation ;
+    boolean Network_Notification ;
+    boolean Auto_Scroll ;
+
+    public LocalData() {
+    }
+
+    public LocalData(boolean Rotation, boolean Network_Notification, boolean Auto_Scroll) {
+        this.Rotation = Rotation ;
+        this.Network_Notification = Network_Notification ;
+        this.Auto_Scroll = Auto_Scroll ;
+    }
+
+    public boolean getRotation() {
+        return this.Rotation ;
+    }
+    public void setRotation(boolean Rotation) {
+        this.Rotation = Rotation ;
+    }
+    public boolean getNetwork() {
+        return this.Network_Notification ;
+    }
+    public void setNetwork(boolean Network_Notification) {
+        this.Rotation = Network_Notification ;
+    }
+    public boolean getScroll() {
+        return this.Auto_Scroll ;
+    }
+    public void setScroll(boolean Auto_Scroll) {
+        this.Rotation = Auto_Scroll ;
+    }
+}
